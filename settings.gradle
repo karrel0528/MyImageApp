@@ -7,7 +7,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "MyImageApp"
-include ':app'
 include ':presentation'
 include ':domain'
 include ':data'
+include ':app2'

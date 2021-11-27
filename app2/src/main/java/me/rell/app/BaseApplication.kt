@@ -1,4 +1,4 @@
-package me.rell.myimageapp.base
+package me.rell.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

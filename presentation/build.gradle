@@ -1,17 +1,16 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 apply from: '../base.gradle'
 
 android {
-
     buildFeatures {
+        dataBinding true
         viewBinding true
-    }
-    defaultConfig {
-        applicationId "me.rell.data"
     }
 }
 
