@@ -6,6 +6,10 @@ plugins {
 apply from: '../base.gradle'
 
 android {
+
+    buildFeatures {
+        viewBinding true
+    }
     defaultConfig {
         applicationId "me.rell.data"
     }
@@ -13,4 +17,9 @@ android {
 
 dependencies {
     implementation project(':domain')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
+
+    implementation "com.uber.autodispose:autodispose-android-archcomponents:1.3.0"
 }
