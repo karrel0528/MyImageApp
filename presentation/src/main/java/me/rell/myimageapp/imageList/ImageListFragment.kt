@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import me.rell.myimageapp.databinding.FragmentItemListBinding
-import me.rell.myimageapp.utils.rx.onDestroy
 import me.rell.myimageapp.utils.rx.onStop
 import me.rell.myimageapp.utils.rx.toAndroidAsync
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ImageListFragment : Fragment() {
@@ -45,6 +45,7 @@ class ImageListFragment : Fragment() {
             .toAndroidAsync()
             .onStop(this)
             .subscribe { items ->
+                Timber.d("items : $items")
                 imageListAdapter.items = items
                 imageListAdapter.notifyDataSetChanged()
             }
