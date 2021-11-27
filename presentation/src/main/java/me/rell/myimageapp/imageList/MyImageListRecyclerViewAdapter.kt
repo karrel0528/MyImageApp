@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import me.rell.myimageapp.databinding.FragmentItemBinding
 
 class MyImageListRecyclerViewAdapter(
-    private val values: List<ImageListItem>
 ) : RecyclerView.Adapter<MyImageListRecyclerViewAdapter.ViewHolder>() {
+    var items: List<ImageListItem> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -16,11 +16,11 @@ class MyImageListRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val item = items[position]
         // todo item.setImage
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = items.size
 
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val imageView: ImageView = binding.listImage

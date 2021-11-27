@@ -19,6 +19,9 @@ class ImageListFragment : Fragment() {
     private lateinit var binding: FragmentItemListBinding
 
     private val imageListViewModel: ImageListViewModel by viewModels()
+    private val imageListAdapter:MyImageListRecyclerViewAdapter by lazy {
+        MyImageListRecyclerViewAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,15 +44,16 @@ class ImageListFragment : Fragment() {
             .observeImageList()
             .toAndroidAsync()
             .onStop(this)
-            .subscribe {
-
+            .subscribe { items ->
+                imageListAdapter.items = items
+                imageListAdapter.notifyDataSetChanged()
             }
     }
 
     private fun setupRecyclerView() {
         binding.list.apply {
             layoutManager = GridLayoutManager(context, 2)
-            adapter = MyImageListRecyclerViewAdapter(PlaceholderContent.ITEMS)
+            adapter = imageListAdapter
         }
     }
 }
