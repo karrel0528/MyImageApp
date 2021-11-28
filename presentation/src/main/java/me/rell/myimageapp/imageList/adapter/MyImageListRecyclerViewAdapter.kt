@@ -10,7 +10,6 @@ class MyImageListRecyclerViewAdapter :
     PagingDataAdapter<ImageListItem, ImageListViewHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListViewHolder {
-
         return ImageListViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 

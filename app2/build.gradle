@@ -10,7 +10,9 @@ apply from: '../base.gradle'
 android {
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
+
     defaultConfig {
         applicationId "me.rell.image"
     }

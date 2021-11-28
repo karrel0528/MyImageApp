@@ -5,7 +5,6 @@ import androidx.paging.rxjava2.RxPagingSource
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import me.rell.domain.GetImageListUseCase
-import me.rell.domain.ImageItem
 import me.rell.myimageapp.imageList.adapter.ImageListItem
 
 class ImageListPagingSource(

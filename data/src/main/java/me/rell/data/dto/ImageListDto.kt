@@ -1,14 +1,14 @@
 package me.rell.data.dto
 
-import me.rell.domain.ImageItem
+import me.rell.domain.ImageDomainItem
 
 class ImageListDto : ArrayList<ImageListDtoItem>() {
 
-    fun convertDomainItem(): List<ImageItem> {
-        val items = arrayListOf<ImageItem>()
+    fun convertDomainItem(): List<ImageDomainItem> {
+        val items = arrayListOf<ImageDomainItem>()
 
         this.forEach { dtoItem ->
-            ImageItem(
+            ImageDomainItem(
                 createDate = dtoItem.created_at ?: "",
                 updateDate = dtoItem.updated_at ?: "",
                 size = Pair(dtoItem.width ?: -1, dtoItem.height ?: -1),
