@@ -9,10 +9,12 @@ interface ImageApiService {
 
     @GET("photos/")
     fun getImage(
-        @Query(CLIENT_ID) key: String = "evythX3W2Wdx4j7WAcTGGyypSsnxxlhLfWkrKVEfdoE"
+        @Query(QUERY_CLIENT_ID) key: String = "evythX3W2Wdx4j7WAcTGGyypSsnxxlhLfWkrKVEfdoE",
+        @Query(QUERY_PAGE) page: Int = 0
     ): Single<ImageListDto>
 
     companion object {
-        private const val CLIENT_ID = "client_id"
+        private const val QUERY_CLIENT_ID = "client_id"
+        private const val QUERY_PAGE = "page"
     }
 }

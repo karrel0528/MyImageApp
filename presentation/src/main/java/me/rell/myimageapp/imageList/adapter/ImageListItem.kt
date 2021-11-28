@@ -1,4 +1,4 @@
-package me.rell.myimageapp.imageList
+package me.rell.myimageapp.imageList.adapter
 
 import me.rell.domain.ImageItem
 

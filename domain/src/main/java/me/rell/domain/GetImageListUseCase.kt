@@ -6,7 +6,7 @@ import javax.inject.Inject
 class GetImageListUseCase @Inject constructor(
     private val imageRepository: ImageRepository
 ) {
-    fun get(): Single<List<ImageItem>> {
-        return imageRepository.getImageList()
+    fun get(page: Int = 0): Single<List<ImageItem>> {
+        return imageRepository.getImageList(page)
     }
 }

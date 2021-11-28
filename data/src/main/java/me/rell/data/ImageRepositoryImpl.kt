@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ImageRepositoryImpl @Inject constructor(
     private val imageApi: ImageApiService
 ) : ImageRepository {
-    override fun getImageList(): Single<List<ImageItem>> {
-        return imageApi.getImage().map { it.convertDomainItem() }
+    override fun getImageList(page: Int): Single<List<ImageItem>> {
+        return imageApi.getImage(page = page).map { it.convertDomainItem() }
     }
 }

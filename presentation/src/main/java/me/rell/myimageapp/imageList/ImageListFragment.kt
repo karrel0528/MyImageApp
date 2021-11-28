@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import me.rell.myimageapp.databinding.FragmentItemListBinding
+import me.rell.myimageapp.imageList.adapter.MyImageListRecyclerViewAdapter
 import me.rell.myimageapp.utils.rx.onStop
 import me.rell.myimageapp.utils.rx.toAndroidAsync
 import timber.log.Timber
@@ -19,7 +20,7 @@ class ImageListFragment : Fragment() {
     private lateinit var binding: FragmentItemListBinding
 
     private val imageListViewModel: ImageListViewModel by viewModels()
-    private val imageListAdapter:MyImageListRecyclerViewAdapter by lazy {
+    private val imageListAdapter: MyImageListRecyclerViewAdapter by lazy {
         MyImageListRecyclerViewAdapter()
     }
 
@@ -41,13 +42,11 @@ class ImageListFragment : Fragment() {
 
     private fun initImageListViewModel() {
         imageListViewModel
-            .observeImageList()
+            .observePagingImages()
             .toAndroidAsync()
             .onStop(this)
-            .subscribe { items ->
-                Timber.d("items : $items")
-                imageListAdapter.items = items
-                imageListAdapter.notifyDataSetChanged()
+            .subscribe { item ->
+                imageListAdapter.submitData(lifecycle, item)
             }
     }
 
