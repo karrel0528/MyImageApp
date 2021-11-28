@@ -9,4 +9,6 @@ apply from: '../base.gradle'
 
 dependencies {
     implementation project(':domain')
+
+
 }

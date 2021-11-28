@@ -5,6 +5,6 @@ data class ImageItem(
     val updateDate: String,
     val size: Pair<Int, Int>,
     val color: String,
-    val title: String,
+    val description: String,
     val url: String
 )
