@@ -25,25 +25,11 @@ import javax.inject.Singleton
 object ImageApiModule {
     private const val API_KEY = "api-key"
     private const val BASE_URL = "https://api.unsplash.com/"
-    private const val KEY_CLIENT_ID = "client_id"
 
     private fun loggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return loggingInterceptor
-    }
-
-    private fun authorizationInterceptor(): Interceptor {
-        return object : Interceptor {
-            override fun intercept(chain: Interceptor.Chain): Response {
-                return chain.proceed(
-                    chain
-                        .request()
-                        .newBuilder()
-                        .build()
-                )
-            }
-        }
     }
 
     @Singleton
@@ -78,12 +64,10 @@ object ImageApiModule {
         if (BuildConfig.DEBUG) {
             OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor())
-                .addInterceptor(authorizationInterceptor())
                 .build()
         } else {
             OkHttpClient
                 .Builder()
-                .addInterceptor(authorizationInterceptor())
                 .build()
         }
 
