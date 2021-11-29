@@ -32,8 +32,8 @@ object ImageDataModule {
         return loggingInterceptor
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, JsonDeserializer { json, _, _ ->
@@ -51,8 +51,8 @@ object ImageDataModule {
             .create()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideOkHttpClient() =
         if (BuildConfig.DEBUG) {
             OkHttpClient.Builder()
@@ -64,8 +64,8 @@ object ImageDataModule {
                 .build()
         }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

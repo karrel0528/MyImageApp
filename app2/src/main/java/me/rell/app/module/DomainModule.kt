@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @InstallIn(ViewModelComponent::class)
 @Module
-object ImageDomainModule {
+object DomainModule {
 
     @Provides
     @ViewModelScoped
