@@ -5,6 +5,7 @@ import androidx.paging.rxjava2.RxPagingSource
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import me.rell.domain.ImageDomainItem
+import timber.log.Timber
 
 class ImageListPagingSource(
     private val imageDataSource: ImageListDataSource
@@ -18,7 +19,9 @@ class ImageListPagingSource(
     }
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ImageDomainItem>> {
-        val page = params.key ?: 0
+        val page = params.key ?: 1
+
+        Timber.d("ImageListPagingSource > page : $page")
 
         return imageDataSource.getImageData(page = page)
             .map { items -> items.mapToDomainItem() }
@@ -37,18 +40,8 @@ class ImageListPagingSource(
         return LoadResult.Page(
             data = items,
             prevKey = if (position == 1) null else position - 1,
-            nextKey = nextKey(items, position, params)
+            nextKey = if (items.isEmpty()) null else position + (params.loadSize / QUERY_PAGE_SIZE)
         )
-    }
-
-    private fun nextKey(
-        repos: List<ImageDomainItem>,
-        position: Int,
-        params: LoadParams<Int>
-    ): Int? = if (repos.isEmpty()) {
-        null
-    } else {
-        position + (params.loadSize / QUERY_PAGE_SIZE)
     }
 
     companion object {
