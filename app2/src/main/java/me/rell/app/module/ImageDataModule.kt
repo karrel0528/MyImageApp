@@ -34,13 +34,6 @@ object ImageDataModule {
 
     @Singleton
     @Provides
-    @Named(API_KEY)
-    fun provideApiKey(): String {
-        return "evythX3W2Wdx4j7WAcTGGyypSsnxxlhLfWkrKVEfdoE"
-    }
-
-    @Singleton
-    @Provides
     fun provideGson(): Gson {
         return GsonBuilder()
             .registerTypeAdapter(LocalDateTime::class.java, JsonDeserializer { json, _, _ ->
