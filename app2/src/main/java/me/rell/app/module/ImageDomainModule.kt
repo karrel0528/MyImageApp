@@ -1,17 +1,21 @@
-package me.rell.domain
+package me.rell.app.module
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
+import me.rell.domain.GetImageListUseCase
+import me.rell.domain.ImageRepository
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 @Module
-object ImageModule {
+object ImageDomainModule {
 
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideGetImageListUseCase(imageRepository: ImageRepository): GetImageListUseCase =
         GetImageListUseCase(imageRepository)
 }

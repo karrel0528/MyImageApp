@@ -1,13 +1,13 @@
-package me.rell.data
+package me.rell.app.module
 
 import com.google.gson.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
+import me.rell.data.BuildConfig
+import me.rell.data.ImageApiService
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -22,7 +22,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ImageApiModule {
+object ImageDataModule {
     private const val API_KEY = "api-key"
     private const val BASE_URL = "https://api.unsplash.com/"
 
