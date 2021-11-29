@@ -21,7 +21,7 @@ class ImageListPagingSource(
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ImageListItem>> {
         val page = params.key ?: 0
 
-        return getImageListUseCase.get(page)
+        return getImageListUseCase(page)
             .map { items -> items.map(ImageListItem::mapFromDomainItem) }
             .subscribeOn(Schedulers.io())
             .map { toLoadResult(page, it, params) }
