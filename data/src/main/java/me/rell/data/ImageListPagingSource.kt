@@ -21,7 +21,7 @@ class ImageListPagingSource(
         val page = params.key ?: 0
 
         return imageApiService.getImage(page = page)
-            .map { items -> items.convertDomainItem() }
+            .map { items -> items.mapToDomainItem() }
             .subscribeOn(Schedulers.io())
             .map { toLoadResult(page, it, params) }
             .onErrorReturn {
