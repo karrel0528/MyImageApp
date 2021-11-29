@@ -59,9 +59,7 @@ class ImageListFragment : Fragment() {
         }
 
         imageListAdapter.addLoadStateListener { loadState ->
-            val errorState = loadState.source.append as? LoadState.Error
-                ?: loadState.source.prepend as? LoadState.Error
-                ?: loadState.append as? LoadState.Error
+            val errorState = loadState.append as? LoadState.Error
                 ?: loadState.prepend as? LoadState.Error
 
             showErrorAlert(errorState)
