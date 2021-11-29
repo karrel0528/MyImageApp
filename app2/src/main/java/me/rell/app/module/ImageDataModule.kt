@@ -23,32 +23,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ImageDataModule {
-    private const val API_KEY = "api-key"
     private const val BASE_URL = "https://api.unsplash.com/"
 
     private fun loggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return loggingInterceptor
-    }
-
-    @Provides
-    @Singleton
-    fun provideGson(): Gson {
-        return GsonBuilder()
-            .registerTypeAdapter(LocalDateTime::class.java, JsonDeserializer { json, _, _ ->
-                ZonedDateTime.parse(json.asJsonPrimitive.asString).toLocalDateTime()
-            })
-            .registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { src, _, _ ->
-                JsonPrimitive(src.atOffset(OffsetTime.now().offset).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
-            })
-            .registerTypeAdapter(LocalDate::class.java, JsonDeserializer { json, _, _ ->
-                LocalDate.parse(json.asJsonPrimitive.asString)
-            })
-            .registerTypeAdapter(LocalDate::class.java, JsonSerializer<LocalDate> { src, _, _ ->
-                JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE))
-            })
-            .create()
     }
 
     @Provides
@@ -66,8 +46,8 @@ object ImageDataModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create(gson))
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create(Gson()))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl(BASE_URL)
         .client(okHttpClient)
