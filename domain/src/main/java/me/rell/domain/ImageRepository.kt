@@ -1,7 +1,8 @@
 package me.rell.domain
 
-import io.reactivex.Single
+import androidx.paging.PagingData
+import io.reactivex.Observable
 
 interface ImageRepository {
-    fun getImageList(page: Int): Single<List<ImageDomainItem>>
+    fun observePagingImages(): Observable<PagingData<ImageDomainItem>>
 }

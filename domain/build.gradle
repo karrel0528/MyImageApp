@@ -8,4 +8,5 @@ plugins {
 apply from: '../base.gradle'
 
 dependencies {
+
 }

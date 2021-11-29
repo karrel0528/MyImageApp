@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import me.rell.domain.ImageDomainItem
 import me.rell.myimageapp.databinding.FragmentItemBinding
 
 class MyImageListRecyclerViewAdapter :
-    PagingDataAdapter<ImageListItem, ImageListViewHolder>(COMPARATOR) {
+    PagingDataAdapter<ImageDomainItem, ImageListViewHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListViewHolder {
         return ImageListViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -18,12 +19,12 @@ class MyImageListRecyclerViewAdapter :
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<ImageListItem>() {
-            override fun areItemsTheSame(oldItem: ImageListItem, newItem: ImageListItem): Boolean {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<ImageDomainItem>() {
+            override fun areItemsTheSame(oldItem: ImageDomainItem, newItem: ImageDomainItem): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ImageListItem, newItem: ImageListItem): Boolean {
+            override fun areContentsTheSame(oldItem: ImageDomainItem, newItem: ImageDomainItem): Boolean {
                 return oldItem.hashCode() == newItem.hashCode()
             }
         }

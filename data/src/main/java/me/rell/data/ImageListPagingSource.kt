@@ -1,16 +1,15 @@
-package me.rell.myimageapp.imageList
+package me.rell.data
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import me.rell.domain.GetImageListUseCase
-import me.rell.myimageapp.imageList.adapter.ImageListItem
+import me.rell.domain.ImageDomainItem
 
 class ImageListPagingSource(
-    private val getImageListUseCase: GetImageListUseCase
-) : RxPagingSource<Int, ImageListItem>() {
-    override fun getRefreshKey(state: PagingState<Int, ImageListItem>): Int? {
+    private val imageApiService: ImageApiService
+) : RxPagingSource<Int, ImageDomainItem>() {
+    override fun getRefreshKey(state: PagingState<Int, ImageDomainItem>): Int? {
         val key = state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
@@ -18,11 +17,11 @@ class ImageListPagingSource(
         return key
     }
 
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ImageListItem>> {
+    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ImageDomainItem>> {
         val page = params.key ?: 0
 
-        return getImageListUseCase(page)
-            .map { items -> items.map(ImageListItem::mapFromDomainItem) }
+        return imageApiService.getImage(page = page)
+            .map { items -> items.convertDomainItem() }
             .subscribeOn(Schedulers.io())
             .map { toLoadResult(page, it, params) }
             .onErrorReturn {
@@ -32,9 +31,9 @@ class ImageListPagingSource(
 
     private fun toLoadResult(
         position: Int,
-        items: List<ImageListItem>,
+        items: List<ImageDomainItem>,
         params: LoadParams<Int>
-    ): LoadResult<Int, ImageListItem> {
+    ): LoadResult<Int, ImageDomainItem> {
         return LoadResult.Page(
             data = items,
             prevKey = if (position == 1) null else position - 1,
@@ -43,7 +42,7 @@ class ImageListPagingSource(
     }
 
     private fun nextKey(
-        repos: List<ImageListItem>,
+        repos: List<ImageDomainItem>,
         position: Int,
         params: LoadParams<Int>
     ): Int? = if (repos.isEmpty()) {
