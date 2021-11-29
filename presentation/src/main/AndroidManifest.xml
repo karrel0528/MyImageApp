@@ -3,4 +3,17 @@
     package="me.rell.myimageapp">
 
 
+    <application>
+        <activity
+            android:name="me.rell.myimageapp.imageList.ImageListActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+
 </manifest>
