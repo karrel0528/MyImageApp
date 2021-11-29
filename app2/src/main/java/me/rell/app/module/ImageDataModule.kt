@@ -52,8 +52,4 @@ object ImageDataModule {
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()
-
-    @Provides
-    @Singleton
-    fun provideApiService(retrofit: Retrofit): ImageApiService = retrofit.create(ImageApiService::class.java)
 }

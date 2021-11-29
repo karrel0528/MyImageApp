@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
 import me.rell.domain.ImageDomainItem
 
 class ImageListPagingSource(
-    private val imageApiService: ImageApiService
+    private val imageDataSource: ImageListDataSource
 ) : RxPagingSource<Int, ImageDomainItem>() {
     override fun getRefreshKey(state: PagingState<Int, ImageDomainItem>): Int? {
         val key = state.anchorPosition?.let { anchorPosition ->
@@ -20,7 +20,7 @@ class ImageListPagingSource(
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ImageDomainItem>> {
         val page = params.key ?: 0
 
-        return imageApiService.getImage(page = page)
+        return imageDataSource.getImageData(page = page)
             .map { items -> items.mapToDomainItem() }
             .subscribeOn(Schedulers.io())
             .map { toLoadResult(page, it, params) }

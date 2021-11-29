@@ -10,13 +10,13 @@ import me.rell.domain.ImageRepository
 import javax.inject.Inject
 
 class ImageRepositoryImpl @Inject constructor(
-    private val imageApi: ImageApiService
+    private val imageDataSource: ImageListDataSource
 ) : ImageRepository {
 
     override fun observePagingImages(): Observable<PagingData<ImageDomainItem>> {
         return Pager(
             config = PagingConfig(QUERY_PAGE_SIZE),
-            pagingSourceFactory = { ImageListPagingSource(imageApi) }
+            pagingSourceFactory = { ImageListPagingSource(imageDataSource) }
         ).observable
     }
 
