@@ -21,11 +21,11 @@ class MyImageListRecyclerViewAdapter :
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<ImageDomainItem>() {
             override fun areItemsTheSame(oldItem: ImageDomainItem, newItem: ImageDomainItem): Boolean {
-                return oldItem == newItem
+                return oldItem.url == newItem.url
             }
 
             override fun areContentsTheSame(oldItem: ImageDomainItem, newItem: ImageDomainItem): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
+                return oldItem == newItem
             }
         }
     }
