@@ -15,7 +15,11 @@ class ImageRepositoryImpl @Inject constructor(
 
     override fun observePagingImages(): Observable<PagingData<ImageDomainItem>> {
         return Pager(
-            config = PagingConfig(QUERY_PAGE_SIZE),
+            config = PagingConfig(
+                pageSize = QUERY_PAGE_SIZE,
+                initialLoadSize = QUERY_PAGE_SIZE,
+                prefetchDistance = QUERY_PAGE_SIZE
+            ),
             pagingSourceFactory = { ImageListPagingSource(imageDataSource) }
         ).observable
     }

@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.rell.domain.ImageDomainItem
 import me.rell.myimageapp.databinding.FragmentItemBinding
+import timber.log.Timber
 
 class ImageListViewHolder(
     private val binding: FragmentItemBinding,
     private val itemOnClick: (View, ImageDomainItem) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: ImageDomainItem) {
+        Timber.d("item : $item")
+
         binding.imageItem = item
 
         binding.listImage.setOnClickListener { view ->

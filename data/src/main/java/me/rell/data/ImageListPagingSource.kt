@@ -15,6 +15,8 @@ class ImageListPagingSource(
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
+        Timber.d("ImageListPagingSource > getRefreshKey : $key")
+
         return key
     }
 
