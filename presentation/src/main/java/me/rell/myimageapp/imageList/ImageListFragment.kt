@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
@@ -12,9 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import me.rell.myimageapp.databinding.FragmentItemListBinding
 import me.rell.myimageapp.imageList.adapter.MyImageListRecyclerViewAdapter
+import me.rell.myimageapp.utils.ResponseResult
 import me.rell.myimageapp.utils.rx.onStop
 import me.rell.myimageapp.utils.rx.toAndroidAsync
-import timber.log.Timber
 
 @AndroidEntryPoint
 class ImageListFragment : Fragment() {
@@ -43,17 +44,30 @@ class ImageListFragment : Fragment() {
     }
 
     private fun initImageListViewModel() {
-        imageListViewModel
-            .observePagingImages()
-            .toAndroidAsync()
-            .onStop(this)
-            .subscribe { item ->
-                imageListAdapter.submitData(lifecycle, item)
+        imageListViewModel.pagingImageDomainData
+            .observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is ResponseResult.Success -> {
+                        imageListAdapter.submitData(lifecycle, result.data)
+                        hideLoadFailMessage()
+                    }
+                    is ResponseResult.Fail    -> {
+                        showLoadFailMessage()
+                    }
+                }
             }
     }
 
+    private fun showLoadFailMessage() {
+        binding.loadFailMessage.isVisible = true
+    }
+
+    private fun hideLoadFailMessage() {
+        binding.loadFailMessage.isVisible = false
+    }
+
     private fun setupRecyclerView() {
-        binding.list.apply {
+        binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = imageListAdapter
         }
