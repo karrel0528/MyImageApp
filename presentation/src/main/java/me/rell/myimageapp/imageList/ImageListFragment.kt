@@ -32,6 +32,7 @@ class ImageListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(inflater, container, false)
+
         setupRecyclerView()
 
         return binding.root
@@ -41,11 +42,24 @@ class ImageListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initImageListViewModel()
+        initSwipeRefreshView()
     }
+
+    private fun initSwipeRefreshView() {
+        binding.swipeRefreshView.apply {
+            setOnRefreshListener {
+                isRefreshing = true
+                imageListAdapter.refresh()
+            }
+        }
+    }
+
 
     private fun initImageListViewModel() {
         imageListViewModel.pagingImageDomainData
             .observe(viewLifecycleOwner) { result ->
+                binding.swipeRefreshView.isRefreshing = false
+
                 when (result) {
                     is ResponseResult.Success -> {
                         imageListAdapter.submitData(lifecycle, result.data)
