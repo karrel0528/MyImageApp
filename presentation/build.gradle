@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 
 apply from: '../base.gradle'
@@ -28,4 +30,8 @@ dependencies {
     implementation "androidx.paging:paging-rxjava2-ktx:3.1.0"
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
 }

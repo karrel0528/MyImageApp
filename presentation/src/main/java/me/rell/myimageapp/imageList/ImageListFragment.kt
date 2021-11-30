@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import me.rell.domain.ImageDomainItem
 import me.rell.myimageapp.databinding.FragmentItemListBinding
 import me.rell.myimageapp.imageList.adapter.MyImageListRecyclerViewAdapter
 import me.rell.myimageapp.utils.ResponseResult
-import me.rell.myimageapp.utils.rx.onStop
-import me.rell.myimageapp.utils.rx.toAndroidAsync
 
 @AndroidEntryPoint
 class ImageListFragment : Fragment() {
@@ -24,7 +24,12 @@ class ImageListFragment : Fragment() {
 
     private val imageListViewModel: ImageListViewModel by viewModels()
     private val imageListAdapter: MyImageListRecyclerViewAdapter by lazy {
-        MyImageListRecyclerViewAdapter()
+        MyImageListRecyclerViewAdapter(itemOnClick)
+    }
+
+    private val itemOnClick: (View, ImageDomainItem) -> Unit = { _, item ->
+        val action = ImageListFragmentDirections.detailAction(item)
+        findNavController().navigate(action)
     }
 
     override fun onCreateView(
@@ -53,7 +58,6 @@ class ImageListFragment : Fragment() {
             }
         }
     }
-
 
     private fun initImageListViewModel() {
         imageListViewModel.pagingImageDomainData

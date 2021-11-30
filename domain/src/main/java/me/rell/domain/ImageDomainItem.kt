@@ -1,5 +1,9 @@
 package me.rell.domain
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class ImageDomainItem(
     val createDate: String,
     val updateDate: String,
@@ -7,4 +11,4 @@ data class ImageDomainItem(
     val color: String,
     val description: String,
     val url: String
-)
+) : Parcelable

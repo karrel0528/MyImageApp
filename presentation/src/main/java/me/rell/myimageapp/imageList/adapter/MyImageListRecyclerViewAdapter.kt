@@ -1,17 +1,18 @@
 package me.rell.myimageapp.imageList.adapter
 
-import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import me.rell.domain.ImageDomainItem
-import me.rell.myimageapp.databinding.FragmentItemBinding
 
-class MyImageListRecyclerViewAdapter :
+class MyImageListRecyclerViewAdapter(
+    private val itemOnClick: (View, ImageDomainItem) -> Unit
+) :
     PagingDataAdapter<ImageDomainItem, ImageListViewHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListViewHolder {
-        return ImageListViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ImageListViewHolder.create(parent, itemOnClick)
     }
 
     override fun onBindViewHolder(holder: ImageListViewHolder, position: Int) {
